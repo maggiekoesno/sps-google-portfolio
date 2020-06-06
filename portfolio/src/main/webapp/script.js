@@ -15,14 +15,19 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomFact() {
+  const funFacts =
+      ['I dyed my hair on a bet. It used to be purple but faded to a blonde.', 
+      'I love to travel and spent a semester in the UK during my second year. ', 
+      'I absolutely love animals and almost became a veterinarian. Glad I chose computer science instead.', 
+      'My favorite programming language is python even though I have a love-hate relationship with duck-typing', 
+      'This is an outdated picture (my hair is fully black now) but I hate taking pictures so this is the only one I have'
+      ];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick a fact.
+  const funFact = funFacts[Math.floor(Math.random() * funFacts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = funFact;
 }
