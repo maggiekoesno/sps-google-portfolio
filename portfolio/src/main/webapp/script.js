@@ -13,7 +13,7 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
 function addRandomFact() {
   const funFacts =
@@ -30,4 +30,13 @@ function addRandomFact() {
   // Add it to the page.
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = funFact;
+}
+
+/**
+ * Fetches random greeting from the server and adds it to the DOM.
+ */
+function getRandomGreeting() {
+    fetch('/greeting').then(response => response.text()).then((greeting) => {
+    document.getElementById('greeting-header').innerText = greeting;
+    });
 }
