@@ -33,6 +33,14 @@ function addRandomFact() {
 }
 
 /**
+ * Run functions on load
+ */
+function runOnLoadFunctions(){
+    getRandomGreeting();
+    getComments();
+}
+
+/**
  * Fetches random greeting from the server and adds it to the DOM.
  */
 function getRandomGreeting() {
