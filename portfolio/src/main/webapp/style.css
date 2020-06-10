@@ -1,9 +1,48 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+#portfolio {
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#sidebar{
+    float: left;
+    width: 200px;
+    margin: 0;
+    padding: 0;
+}
+
+#img-container{
+    text-align: center;
+}
+
+#content{
+    margin-left: 200px;
+    padding-left: 10px;
 }
 
 #fact-container {
-  margin-top: 20px;
+    margin-top: 20px;
+}
+
+ul {
+    list-style-type: none;
+    position: fixed;
+}
+
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+img {
+    width: 80px;
+    border-radius:50%;
+    padding: 5px;
 }
