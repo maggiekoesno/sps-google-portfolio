@@ -14,8 +14,11 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.data.Comment;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,39 +28,35 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comments")
 public final class CommentServlet extends HttpServlet {
 
-    private List<String> comments;
+    private List<Comment> comments;
 
     @Override
     public void init() {
-    comments = new ArrayList<>();
-    comments.add("This is a comment");
-    comments.add("This is probably also a comment");
-    comments.add("Oh look! Another comment");
+        comments = new ArrayList<>();
+
+        Comment comment1 = new Comment("Anonymous", "This is a comment");
+        Comment comment2 = new Comment("Sine Nomine", "This is probably also a comment");
+        Comment comment3 = new Comment("Anonimo", "Oh look! Another comment");
+
+        Comment subcomment = new Comment("Anonymous", "I am commenting on this comment");
+        comment3.addSubcomment(subcomment);
+
+        comments.add(comment1);
+        comments.add(comment2);
+        comments.add(comment3);
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // Calculate server stats
-    Date currentTime = new Date();
-    long maxMemory = Runtime.getRuntime().maxMemory();
-    long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        String json = convertToJson(comments);
 
-    // Convert the server stats to JSON
-    ServerStats serverStats = new ServerStats(startTime, currentTime, maxMemory, usedMemory);
-    String json = convertToJson(serverStats);
-
-    // Send the JSON as the response
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
     }
 
-    /**
-    * Converts a ServerStats instance into a JSON string using the Gson library. Note: We first added
-    * the Gson library dependency to pom.xml.
-    */
-    private String convertToJsonUsingGson(ServerStats serverStats) {
-    Gson gson = new Gson();
-    String json = gson.toJson(serverStats);
-    return json;
+    private String convertToJson(List<Comment> comments) {
+        Gson gson = new Gson();
+        String json = gson.toJson(comments);
+        return json;
     }
 }
