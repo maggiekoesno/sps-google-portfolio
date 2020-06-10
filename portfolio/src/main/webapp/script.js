@@ -40,3 +40,54 @@ function getRandomGreeting() {
     document.getElementById('greeting-header').innerText = greeting;
     });
 }
+
+/**
+ * Fetches comments from the server and adds it to the DOM.
+ */
+function getComments() {
+  fetch('/comments').then(response => response.json()).then((comments) => {
+    // stats is an object, not a string, so we have to
+    // reference its fields to create HTML content
+
+    const commentContainer = document.getElementById('comments-container');
+    createCommentElement(commentContainer, comments);
+  });
+}
+
+/** Creates a <div> element containing comment. */
+function createCommentElement(commentContainer, comments) {
+    if (comments.length == 0){
+        return commentContainer;
+    }
+
+    var i;
+    var commentDiv;
+    var paragraph;
+    var node;
+    var subcomments;
+
+    for (i = 0; i < comments.length; i++) {
+        commentDiv = document.createElement("div");
+        commentDiv.className = "comment-container";
+
+        paragraph = document.createElement("p");
+        paragraph.className = "commenter";
+        node = document.createTextNode(comments[i].commenter);
+        paragraph.appendChild(node);
+
+        commentDiv.appendChild(paragraph);
+        
+        paragraph = document.createElement("p");
+        paragraph.className = "comment-message";
+        node = document.createTextNode(comments[i].commentMessage);
+        paragraph.appendChild(node);
+
+        commentDiv.appendChild(paragraph);
+
+        commentDiv = createCommentElement(commentDiv, comments[i].subcomments);
+
+        commentContainer.appendChild(commentDiv);
+    }
+
+    return commentContainer;
+}

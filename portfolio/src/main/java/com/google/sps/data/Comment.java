@@ -9,24 +9,24 @@ public final class Comment {
 
   private final String commenter;
   private final String commentMessage;
-  private final List<Comment> comments;
+  private final List<Comment> subcomments;
 
   public Comment(String commenter, String commentMessage) {
     this.commenter = commenter;
     this.commentMessage = commentMessage;
-    this.comments = new ArrayList();
+    this.subcomments = new ArrayList();
 
   }
 
-  public Comment(String commenter, String commentMessage, List<Comment> comments) {
+  public Comment(String commenter, String commentMessage, List<Comment> subcomments) {
     this.commenter = commenter;
     this.commentMessage = commentMessage;
-    this.comments = comments;
+    this.subcomments = subcomments;
 
   }
 
-  public List<Comment> getComments() {
-    return comments;
+  public List<Comment> getsubcomments() {
+    return subcomments;
   }
 
   public String getCommenter() {
@@ -38,6 +38,6 @@ public final class Comment {
   }
 
   public void addSubcomment(Comment subcomment){
-    this.comments.add(subcomment);
+    this.subcomments.add(subcomment);
   }
 }

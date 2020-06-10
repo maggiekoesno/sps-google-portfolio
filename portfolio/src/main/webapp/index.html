@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getRandomGreeting()">
+  <body onload="getComments()">
     <div id="portfolio">
         <div id="sidebar">
             <div id="img-container">
@@ -15,7 +15,7 @@
             <ul>
                 <li><a class="active" href="#index">Hello</a></li>
                 <li><a href="#facts">Find Out More</a></li>
-                <li><a href="#">Contact Me</a></li>
+                <li><a href="#comments">Comments</a></li>
             </ul>
         </div>
         <div id="content">
@@ -28,6 +28,10 @@
                 <p>Get to know me a bit better with some random facts:</p>
                 <button onclick="addRandomFact()"> Tell me more </button>
                 <div id="fact-container"></div>
+            </div>
+            <div class="subcontent" id="comments">
+                <p>Here are some previous comments:</p>
+                <div id="comments-container"></div>
             </div>
         </div>
     </div>
