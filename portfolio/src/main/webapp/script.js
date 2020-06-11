@@ -68,13 +68,7 @@ function createCommentElement(commentContainer, comments) {
         return commentContainer;
     }
 
-    var i;
-    var commentDiv;
-    var paragraph;
-    var node;
-    var replyForm;
-    var formInput;
-    var commenter;
+    var i; var commentDiv; var paragraph; var node; var replyForm; var formInput; var commenter;
 
     for (i = 0; i < comments.length; i++) {
         commentDiv = document.createElement("div");
