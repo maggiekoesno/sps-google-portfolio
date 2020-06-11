@@ -107,7 +107,7 @@ function createCommentElement(comment){
 
     formInput = document.createElement("input");
     formInput.type = "submit";
-    formInput.value = "Reply";
+    formInput.style = "display: none";
     replyForm.appendChild(formInput);
 
     commentDiv.appendChild(replyForm);
