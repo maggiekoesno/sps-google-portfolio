@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body onload="getRandomGreeting()">
+  <body onload="runOnLoadFunctions()">
     <div id="portfolio">
         <div id="sidebar">
             <div id="img-container">
@@ -15,12 +15,12 @@
             <ul>
                 <li><a class="active" href="#index">Hello</a></li>
                 <li><a href="#facts">Find Out More</a></li>
-                <li><a href="#">Contact Me</a></li>
+                <li><a href="#comments">Comments</a></li>
             </ul>
         </div>
         <div id="content">
             <div class="subcontent" id="index">
-                <h1> Hello!</h1>
+                <h1 id="greeting-header"> Hello!</h1>
                 <p>My name is Margaret Claire and welcome to my portfolio.</p>
                 <p>I'm currently a final year student at Nanyang Technological University. I'm majoring in Computer Science with a specialisation in Computer Security and Artificial Intelligence. </p>
             </div>
@@ -28,6 +28,10 @@
                 <p>Get to know me a bit better with some random facts:</p>
                 <button onclick="addRandomFact()"> Tell me more </button>
                 <div id="fact-container"></div>
+            </div>
+            <div class="subcontent" id="comments">
+                <p>Here are some previous comments:</p>
+                <div id="comments-container"></div>
             </div>
         </div>
     </div>
