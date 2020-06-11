@@ -82,21 +82,14 @@ function createCommentElement(comment){
     commentDiv = document.createElement("div");
     commentDiv.className = "comment-container";
 
-    paragraph = document.createElement("p");
-    paragraph.className = "commenter";
+
     commenter = comment.commenter;
     if (commenter === ""){
         commenter = "Anonymous";
     }
-    node = document.createTextNode(commenter);
-    paragraph.appendChild(node);
-    commentDiv.appendChild(paragraph);
-    
-    paragraph = document.createElement("p");
-    paragraph.className = "comment-message";
-    node = document.createTextNode(comment.commentMessage);
-    paragraph.appendChild(node);
-    commentDiv.appendChild(paragraph);
+    commentDiv.appendChild(createParagraphElement("commenter", commenter));  
+
+    commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage));
 
     replyForm = document.createElement("form");
     replyForm.action = "/comments";
@@ -120,6 +113,14 @@ function createCommentElement(comment){
     commentDiv.appendChild(replyForm);
 
     return addCommentElements(commentDiv, comment.subcomments);
+}
+
+function createParagraphElement(className, text){
+    paragraph = document.createElement("p");
+    paragraph.className = className;
+    node = document.createTextNode(text);
+    paragraph.appendChild(node);
+    return paragraph
 }
 
 function createInputElement(name, placeholder, size, maxLength, required) {
