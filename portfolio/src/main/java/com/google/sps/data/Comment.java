@@ -7,37 +7,37 @@ import java.util.ArrayList;
 /** Class containing server statistics. */
 public final class Comment {
 
-  private final String commenter;
-  private final String commentMessage;
-  private final List<Comment> subcomments;
+    private static int id_counter = 0;
 
-  public Comment(String commenter, String commentMessage) {
-    this.commenter = commenter;
-    this.commentMessage = commentMessage;
-    this.subcomments = new ArrayList();
+    private final int id;
+    private final String commenter;
+    private final String commentMessage;
+    private final List<Comment> subcomments;
 
-  }
+    public Comment(String commenter, String commentMessage) {
+        this.commenter = commenter;
+        this.commentMessage = commentMessage;
+        this.subcomments = new ArrayList();
+        this.id = ++id_counter;
+    }
 
-  public Comment(String commenter, String commentMessage, List<Comment> subcomments) {
-    this.commenter = commenter;
-    this.commentMessage = commentMessage;
-    this.subcomments = subcomments;
+    public int getId() {
+        return id;
+    }
 
-  }
+    public List<Comment> getSubcomments() {
+        return subcomments;
+    }
 
-  public List<Comment> getsubcomments() {
-    return subcomments;
-  }
+    public void addSubcomment(Comment subcomment){
+        this.subcomments.add(subcomment);
+    }
 
-  public String getCommenter() {
-    return commenter;
-  }
+    public String getCommenter() {
+        return commenter;
+    }
 
-  public String getCommentMessage() {
-    return commentMessage;
-  }
-
-  public void addSubcomment(Comment subcomment){
-    this.subcomments.add(subcomment);
-  }
+    public String getCommentMessage() {
+        return commentMessage;
+    }
 }

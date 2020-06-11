@@ -72,7 +72,9 @@ function createCommentElement(commentContainer, comments) {
     var commentDiv;
     var paragraph;
     var node;
-    var subcomments;
+    var replyForm;
+    var formInput;
+    var commenter;
 
     for (i = 0; i < comments.length; i++) {
         commentDiv = document.createElement("div");
@@ -80,17 +82,40 @@ function createCommentElement(commentContainer, comments) {
 
         paragraph = document.createElement("p");
         paragraph.className = "commenter";
-        node = document.createTextNode(comments[i].commenter);
+        commenter = comments[i].commenter;
+        if (commenter === ""){
+            commenter = "Anonymous";
+        }
+        node = document.createTextNode(commenter);
         paragraph.appendChild(node);
-
         commentDiv.appendChild(paragraph);
         
         paragraph = document.createElement("p");
         paragraph.className = "comment-message";
         node = document.createTextNode(comments[i].commentMessage);
         paragraph.appendChild(node);
-
         commentDiv.appendChild(paragraph);
+
+        replyForm = document.createElement("form");
+        replyForm.action = "/comments";
+        replyForm.method = "POST";
+
+        replyForm.appendChild(createInputElement("commenter", "Name (Optional)", "20", "20", false));
+
+        replyForm.appendChild(createInputElement("comment-message", "Add a reply...", "100", "400", true));
+        
+        formInput = document.createElement("input");
+        formInput.type = "hidden";
+        formInput.name = "parent-comment";
+        formInput.value = comments[i].id;
+        replyForm.appendChild(formInput);
+
+        formInput = document.createElement("input");
+        formInput.type = "submit";
+        formInput.value = "Reply";
+        replyForm.appendChild(formInput);
+
+        commentDiv.appendChild(replyForm);
 
         commentDiv = createCommentElement(commentDiv, comments[i].subcomments);
 
@@ -98,4 +123,15 @@ function createCommentElement(commentContainer, comments) {
     }
 
     return commentContainer;
+}
+
+function createInputElement(name, placeholder, size, maxLength, required) {
+    var userInput = document.createElement("input");
+    userInput.name = name;
+    userInput.placeholder = placeholder;
+    userInput.size = size;
+    userInput.maxlength = maxLength;
+    userInput.required = required;
+
+    return userInput
 }

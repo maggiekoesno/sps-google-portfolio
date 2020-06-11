@@ -30,7 +30,13 @@
                 <div id="fact-container"></div>
             </div>
             <div class="subcontent" id="comments">
-                <p>Here are some previous comments:</p>
+                <p>Leave me a comment!</p>
+                <form name="2" action="/comments" method="POST">
+                    <input type="text" name="commenter" placeholder="Name (Optional)" size = "20" maxlength="20">
+                    <input type="text" name="comment-message" placeholder="Comment" size = "100" maxlength="400" required> 
+                    <input type="hidden" name="parent-comment" value="0"> 
+                    <input type="submit" value="Comment">
+                </form>
                 <div id="comments-container"></div>
             </div>
         </div>
