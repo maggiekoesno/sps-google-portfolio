@@ -58,44 +58,84 @@ function getComments() {
     // reference its fields to create HTML content
 
     const commentContainer = document.getElementById('comments-container');
-    createCommentElement(commentContainer, comments);
+    addCommentElements(commentContainer, comments);
   });
 }
 
 /** Creates a <div> element containing comment. */
-function createCommentElement(commentContainer, comments) {
+function addCommentElements(commentContainer, comments) {
     if (comments.length == 0){
         return commentContainer;
     }
 
     var i;
-    var commentDiv;
-    var paragraph;
-    var node;
-    var subcomments;
-
     for (i = 0; i < comments.length; i++) {
-        commentDiv = document.createElement("div");
-        commentDiv.className = "comment-container";
-
-        paragraph = document.createElement("p");
-        paragraph.className = "commenter";
-        node = document.createTextNode(comments[i].commenter);
-        paragraph.appendChild(node);
-
-        commentDiv.appendChild(paragraph);
-        
-        paragraph = document.createElement("p");
-        paragraph.className = "comment-message";
-        node = document.createTextNode(comments[i].commentMessage);
-        paragraph.appendChild(node);
-
-        commentDiv.appendChild(paragraph);
-
-        commentDiv = createCommentElement(commentDiv, comments[i].subcomments);
-
-        commentContainer.appendChild(commentDiv);
+        commentContainer.appendChild(createCommentElement(comments[i]));
     }
 
     return commentContainer;
+}
+
+function createCommentElement(comment){
+    var commentDiv; var commenter;
+
+    commentDiv = document.createElement("div");
+    commentDiv.className = "comment-container";
+
+
+    commenter = comment.commenter;
+    if (commenter === ""){
+        commenter = "Anonymous";
+    }
+    commentDiv.appendChild(createParagraphElement("commenter", commenter));  
+    commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage));
+    commentDiv.appendChild(createReplyFormElement(comment.id));
+
+    return addCommentElements(commentDiv, comment.subcomments);
+}
+
+function createReplyFormElement(parentId){
+    var replyForm; var formInput; 
+
+    replyForm = document.createElement("form");
+    replyForm.action = "/comments";
+    replyForm.method = "POST";
+
+    replyForm.appendChild(createInputElement("commenter", "Name (Optional)", "20", "20", false));
+
+    replyForm.appendChild(createInputElement("comment-message", "Add a reply...", "100", "400", true));
+    
+    formInput = document.createElement("input");
+    formInput.type = "hidden";
+    formInput.name = "parent-comment";
+    formInput.value = parentId;
+    replyForm.appendChild(formInput);
+
+    formInput = document.createElement("input");
+    formInput.type = "submit";
+    formInput.style = "display: none";
+    replyForm.appendChild(formInput);
+
+    return replyForm;
+}
+
+function createParagraphElement(className, text){
+    var paragraph; var node;
+
+    paragraph = document.createElement("p");
+    paragraph.className = className;
+    node = document.createTextNode(text);
+    paragraph.appendChild(node);
+    return paragraph
+}
+
+function createInputElement(name, placeholder, size, maxLength, required) {
+    var userInput = document.createElement("input");
+    userInput.name = name;
+    userInput.placeholder = placeholder;
+    userInput.size = size;
+    userInput.maxlength = maxLength;
+    userInput.required = required;
+
+    return userInput
 }

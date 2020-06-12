@@ -33,30 +33,50 @@ public final class CommentServlet extends HttpServlet {
     @Override
     public void init() {
         comments = new ArrayList<>();
-
-        Comment comment1 = new Comment("Anonymous", "This is a comment");
-        Comment comment2 = new Comment("Sine Nomine", "This is probably also a comment");
-        Comment comment3 = new Comment("Anonimo", "Oh look! Another comment");
-
-        Comment subcomment = new Comment("Anonymous", "I am commenting on this comment");
-        comment3.addSubcomment(subcomment);
-
-        comments.add(comment1);
-        comments.add(comment2);
-        comments.add(comment3);
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String json = convertToJson(comments);
+        Gson gson = new Gson();
+        String json = gson.toJson(comments);
 
         response.setContentType("application/json;");
         response.getWriter().println(json);
     }
 
-    private String convertToJson(List<Comment> comments) {
-        Gson gson = new Gson();
-        String json = gson.toJson(comments);
-        return json;
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String commenter = request.getParameter("commenter");
+        String commentMessage = request.getParameter("comment-message");
+        int parentCommentId = Integer.parseInt(request.getParameter("parent-comment"));
+
+        Comment comment = new Comment(commenter, commentMessage);
+
+        if (parentCommentId == 0){
+            comments.add(comment);
+        }
+        else {
+            Comment parentComment = getComment(parentCommentId, comments);
+            parentComment.addSubcomment(comment);
+        }
+        response.sendRedirect("/index.html");
+    }
+
+    private Comment getComment(int id, List<Comment> comments){
+        if(comments.isEmpty()){
+            return null;
+        }
+        for (Comment comment : comments){
+            if (comment.getId() == id){
+                return comment;
+            }
+            else {
+                Comment subcomment = getComment(id, comment.getSubcomments());
+                if (subcomment != null){
+                    return subcomment;
+                }
+            }
+        }
+        return null;
     }
 }
