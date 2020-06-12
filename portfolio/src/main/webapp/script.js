@@ -89,11 +89,14 @@ function createCommentElement(comment, isReply){
     }
     commentDiv.appendChild(createParagraphElement("commenter", commenter));  
     commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage));
+
     if(!isReply){
+        commentDiv = addCommentElements(commentDiv, comment.subcomments, true);
         commentDiv.appendChild(createReplyFormElement(comment.id));
+        return commentDiv
     }
 
-    return addCommentElements(commentDiv, comment.subcomments, true);
+    return commentDiv
 }
 
 function createReplyFormElement(parentId){
