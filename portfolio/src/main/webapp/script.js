@@ -58,25 +58,25 @@ function getComments() {
     // reference its fields to create HTML content
 
     const commentContainer = document.getElementById('comments-container');
-    addCommentElements(commentContainer, comments);
+    addCommentElements(commentContainer, comments, false);
   });
 }
 
 /** Creates a <div> element containing comment. */
-function addCommentElements(commentContainer, comments) {
+function addCommentElements(commentContainer, comments, isReply) {
     if (comments.length == 0){
         return commentContainer;
     }
 
     var i;
     for (i = 0; i < comments.length; i++) {
-        commentContainer.appendChild(createCommentElement(comments[i]));
+        commentContainer.appendChild(createCommentElement(comments[i], isReply));
     }
 
     return commentContainer;
 }
 
-function createCommentElement(comment){
+function createCommentElement(comment, isReply){
     var commentDiv; var commenter;
 
     commentDiv = document.createElement("div");
@@ -89,9 +89,11 @@ function createCommentElement(comment){
     }
     commentDiv.appendChild(createParagraphElement("commenter", commenter));  
     commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage));
-    commentDiv.appendChild(createReplyFormElement(comment.id));
+    if(!isReply){
+        commentDiv.appendChild(createReplyFormElement(comment.id));
+    }
 
-    return addCommentElements(commentDiv, comment.subcomments);
+    return addCommentElements(commentDiv, comment.subcomments, true);
 }
 
 function createReplyFormElement(parentId){
