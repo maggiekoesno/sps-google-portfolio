@@ -77,7 +77,7 @@ function addCommentElements(commentContainer, comments) {
 }
 
 function createCommentElement(comment){
-    var commentDiv; var paragraph; var node; var replyForm; var formInput; var commenter;
+    var commentDiv; var commenter;
 
     commentDiv = document.createElement("div");
     commentDiv.className = "comment-container";
@@ -88,8 +88,14 @@ function createCommentElement(comment){
         commenter = "Anonymous";
     }
     commentDiv.appendChild(createParagraphElement("commenter", commenter));  
-
     commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage));
+    commentDiv.appendChild(createReplyFormElement(comment.id));
+
+    return addCommentElements(commentDiv, comment.subcomments);
+}
+
+function createReplyFormElement(parentId){
+    var replyForm; var formInput; 
 
     replyForm = document.createElement("form");
     replyForm.action = "/comments";
@@ -102,7 +108,7 @@ function createCommentElement(comment){
     formInput = document.createElement("input");
     formInput.type = "hidden";
     formInput.name = "parent-comment";
-    formInput.value = comment.id;
+    formInput.value = parentId;
     replyForm.appendChild(formInput);
 
     formInput = document.createElement("input");
@@ -110,12 +116,12 @@ function createCommentElement(comment){
     formInput.style = "display: none";
     replyForm.appendChild(formInput);
 
-    commentDiv.appendChild(replyForm);
-
-    return addCommentElements(commentDiv, comment.subcomments);
+    return replyForm;
 }
 
 function createParagraphElement(className, text){
+    var paragraph; var node;
+
     paragraph = document.createElement("p");
     paragraph.className = className;
     node = document.createTextNode(text);
