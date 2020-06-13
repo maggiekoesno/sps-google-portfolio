@@ -18,6 +18,11 @@ import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,35 +36,69 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comments")
 public final class CommentServlet extends HttpServlet {
 
-    private List<Comment> comments;
-
-    @Override
-    public void init() {
-        comments = new ArrayList<>();
-    }
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Query commentQuery = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery commentResults = datastore.prepare(commentQuery);
+
+        List<Comment> comments = new ArrayList<>();
+
+        for (Entity commentEntity : commentResults.asIterable()) {
+            long id = commentEntity.getKey().getId();
+            String commenter = (String) commentEntity.getProperty("commenter");
+            String message = (String) commentEntity.getProperty("message");
+
+            Comment comment = new Comment(id, commenter, message);
+
+            Query replyQuery = new Query("Reply").setFilter(new FilterPredicate("parentId", FilterOperator.EQUAL, id)).addSort("timestamp", SortDirection.DESCENDING);
+            PreparedQuery replyResults = datastore.prepare(replyQuery);
+
+            for (Entity replyEntity : replyResults.asIterable()) {
+                id = commentEntity.getKey().getId();
+                commenter = (String) commentEntity.getProperty("commenter");
+                message = (String) commentEntity.getProperty("message");
+
+                Comment reply = new Comment(id, commenter, message);
+
+                comment.addSubcomment(reply);
+            }
+
+            comments.add(comment);
+        }
+
         Gson gson = new Gson();
-        String json = gson.toJson(comments);
 
         response.setContentType("application/json;");
-        response.getWriter().println(json);
+        response.getWriter().println(gson.toJson(comments));
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String commenter = request.getParameter("commenter");
         String commentMessage = request.getParameter("comment-message");
-        int parentCommentId = Integer.parseInt(request.getParameter("parent-comment"));
+        long parentCommentId = Long.parseLong(request.getParameter("parent-comment"));
+        
+        long timestamp = System.currentTimeMillis();
 
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("commenter", commenter);
-        commentEntity.setProperty("message", commentMessage);
-        commentEntity.setProperty("parentId", parentCommentId);
+        Entity entity;
+
+        if (parentCommentId == -1){
+            entity = new Entity("Comment");
+        }
+        else{
+            entity = new Entity("Reply");
+            entity.setProperty("parentId", parentCommentId);
+        }
+
+        entity.setProperty("commenter", commenter);
+        entity.setProperty("message", commentMessage);
+        entity.setProperty("timestamp", timestamp);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
+        datastore.put(entity);
 
         response.sendRedirect("/index.html");
     }
