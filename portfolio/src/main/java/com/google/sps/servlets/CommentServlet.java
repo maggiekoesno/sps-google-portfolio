@@ -15,6 +15,9 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.Comment;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,15 +53,14 @@ public final class CommentServlet extends HttpServlet {
         String commentMessage = request.getParameter("comment-message");
         int parentCommentId = Integer.parseInt(request.getParameter("parent-comment"));
 
-        Comment comment = new Comment(commenter, commentMessage);
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("commenter", commenter);
+        commentEntity.setProperty("message", commentMessage);
+        commentEntity.setProperty("parentId", parentCommentId);
 
-        if (parentCommentId == 0){
-            comments.add(comment);
-        }
-        else {
-            Comment parentComment = getComment(parentCommentId, comments);
-            parentComment.addSubcomment(comment);
-        }
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+
         response.sendRedirect("/index.html");
     }
 
