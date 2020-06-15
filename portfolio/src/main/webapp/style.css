@@ -59,6 +59,29 @@ img {
     height: 74vh;
 }
 
+#fact-button{
+    border: solid #9fabaf;
+    border-width: 0 1vmin 1vmin 0;
+    display: inline-block;
+    padding: 1vmin;
+    transform: rotate(-45deg);
+    background-color: #f9f8f5;
+}
+
+#fact-text-div{
+    display: inline-block;
+    height: 5vh;
+    vertical-align: bottom;
+    padding-left: 1vw;
+}
+
+#fact-text{
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-top: 3vmin;
+}
+
 #fact-container {
     margin-top: 20px;
 }
