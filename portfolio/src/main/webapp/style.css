@@ -15,24 +15,40 @@
 
 #portfolio {
     background-color: #f9f8f5;
-    height: 70vh;
-    width: 70vw;
-    margin-top: 15vh;
-    margin-left: 15vw;
-    margin-right: 15vw;
+    height: 80vh;
+    width: 80vw;
+    margin-top: 10vh;
+    margin-left: 10vw;
     position: absolute;
     border: 5px solid black;
 }
 
 #sidebar{
     float: left;
-    width: 200px;
     margin: 0;
+    height: 74vh;
+    padding: 3vh 3vw;
+}
+
+#img-index{ 
+    border-radius: 50%;
+    height: 100%;
     padding: 0;
 }
 
-#img-container{
+.nav-item{
     text-align: center;
+    border-radius: 50%;
+    border: 2px solid #9fabaf;
+    height: 10vh;
+    width: 10vh;
+    margin: 4vh 0;
+}
+
+
+img {
+    height: 6vh;
+    padding: 2vh 0;
 }
 
 #content{
@@ -53,27 +69,4 @@
 p.commenter{
     color: gray;
     font-style: italic;
-}
-
-ul {
-    list-style-type: none;
-    position: fixed;
-}
-
-li a {
-  display: block;
-  color: #000;
-  padding: 8px 16px;
-  text-decoration: none;
-}
-
-li a:hover:not(.active) {
-  background-color: #555;
-  color: white;
-}
-
-img {
-    width: 80px;
-    border-radius:50%;
-    padding: 5px;
 }
