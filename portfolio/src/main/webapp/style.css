@@ -52,7 +52,7 @@ img {
 }
 
 #content{
-    padding: 3vh 3vw 0 0;
+    margin: 3vh 3vw 0 0;
     overflow: scroll;
     font-family: Verdana;
     font-size: large;
@@ -86,14 +86,28 @@ img {
     margin-top: 20px;
 }
 
+input{
+    height: 3vh;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #9fabaf;
+    background-color: #f9f8f5;
+    margin-left: 4px;
+}
+
+#main-form{
+    padding-left: 1vw;
+}
+
 .comment-container{
-    border-left: 2px solid gray;
+    border-left: 2px solid #b58171;
     padding-left: 5px;
     margin-left: 20px;
 }
 
 p.commenter{
-    color: gray;
+    color: #9fabaf;
     font-style: italic;
 }
 
