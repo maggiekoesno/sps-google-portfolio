@@ -52,8 +52,11 @@ img {
 }
 
 #content{
-    margin-left: 200px;
-    padding-left: 10px;
+    padding: 3vh 3vw 0 0;
+    overflow: scroll;
+    font-family: Verdana;
+    font-size: large;
+    height: 74vh;
 }
 
 #fact-container {
