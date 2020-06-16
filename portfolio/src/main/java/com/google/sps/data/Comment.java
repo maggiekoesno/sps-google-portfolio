@@ -7,21 +7,19 @@ import java.util.ArrayList;
 /** Class containing server statistics. */
 public final class Comment {
 
-    private static int id_counter = 0;
-
-    private final int id;
+    private final long id;
     private final String commenter;
     private final String commentMessage;
     private final List<Comment> subcomments;
 
-    public Comment(String commenter, String commentMessage) {
+    public Comment(long id, String commenter, String commentMessage) {
+        this.id = id;
         this.commenter = commenter;
         this.commentMessage = commentMessage;
         this.subcomments = new ArrayList();
-        this.id = ++id_counter;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
