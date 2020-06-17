@@ -18,9 +18,12 @@ import com.google.sps.data.Comment;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,22 +54,23 @@ public final class CommentServlet extends HttpServlet {
 
             Comment comment = new Comment(id, commenter, message);
 
-            Query replyQuery = new Query("Reply").addSort("timestamp", SortDirection.DESCENDING);
+            Query replyQuery = new Query("Reply").setFilter(new FilterPredicate("parentId", FilterOperator.EQUAL, id)).addSort("timestamp", SortDirection.DESCENDING);
             PreparedQuery replyResults = datastore.prepare(replyQuery);
 
-            for (Entity replyEntity : replyResults.asIterable()) {
-                long parentId = (long) replyEntity.getProperty("parentId");
-                if(parentId == id){
-                    long replyId = replyEntity.getKey().getId();
-                    commenter = (String) replyEntity.getProperty("commenter");
-                    message = (String) replyEntity.getProperty("message");
+            if(replyResults.countEntities(FetchOptions.Builder.withLimit(10)) > 0){
+                for (Entity replyEntity : replyResults.asIterable()) {
+                    long parentId = (long) replyEntity.getProperty("parentId");
+                    if(parentId == id){
+                        long replyId = replyEntity.getKey().getId();
+                        commenter = (String) replyEntity.getProperty("commenter");
+                        message = (String) replyEntity.getProperty("message");
 
-                    Comment reply = new Comment(replyId, commenter, message);
+                        Comment reply = new Comment(replyId, commenter, message);
 
-                    comment.addSubcomment(reply);
+                        comment.addSubcomment(reply);
+                    }
                 }
             }
-
             comments.add(comment);
         }
 
