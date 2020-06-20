@@ -82,8 +82,10 @@ function createCommentElement(comment, isReply){
     if (commenter === ""){
         commenter = "Anonymous";
     }
+
     commentDiv.appendChild(createParagraphElement("commenter", commenter));  
-    commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage));
+    commentDiv.appendChild(createSelectElement(comment.id));    
+    commentDiv.appendChild(createParagraphElement("comment-message", comment.commentMessage, comment.id));
 
     if(!isReply){
         commentDiv = addCommentElements(commentDiv, comment.subcomments, true);
@@ -119,14 +121,48 @@ function createReplyFormElement(parentId){
     return replyForm;
 }
 
-function createParagraphElement(className, text){
-    var paragraph; var node;
+function createParagraphElement(className, text, id=-1){
+    var paragraph; var node; var paragraphId;
 
     paragraph = document.createElement("p");
     paragraph.className = className;
+    if(id != -1){
+        paragraphId = "comment-".concat(id.toString());
+        paragraph.id = paragraphId;
+    }
     node = document.createTextNode(text);
     paragraph.appendChild(node);
     return paragraph
+}
+
+function createSelectElement(id){
+    var selectElement; var selectId; var optionElement; var languages; var languageCode; var textId;
+
+    selectElement = document.createElement("select");
+    selectElement.className = "language";
+    selectId = "select-".concat(id.toString());
+    selectElement.id = selectId;
+
+    textId = "comment-".concat(id.toString());
+    selectElement.onchange = function(){requestTranslation(textId,selectId);};
+
+    optionElement = document.createElement("option");
+    optionElement.value = "";
+    optionElement.innerText = "Translate";
+    optionElement.style = "display:none;";
+    optionElement.disabled = "disabled";
+    optionElement.selected = "selected";
+    selectElement.appendChild(optionElement);   
+
+    languages = {"en":"English", "zh":"Chinese", "es":"Spanish"};
+    for(languageCode in languages){
+        optionElement = document.createElement("option");
+        optionElement.value = languageCode;
+        optionElement.innerText = languages[languageCode];
+        selectElement.appendChild(optionElement);
+    }
+
+    return selectElement;
 }
 
 function createInputElement(name, placeholder, size, maxLength, required) {
@@ -138,4 +174,23 @@ function createInputElement(name, placeholder, size, maxLength, required) {
     userInput.required = required;
 
     return userInput
+}
+
+function requestTranslation(textId, languageId) {
+    const text = document.getElementById(textId).innerText;
+    const languageCode = document.getElementById(languageId).value;
+
+    const textContainer = document.getElementById(textId);
+
+    const params = new URLSearchParams();
+    params.append('text', text);
+    params.append('languageCode', languageCode);
+
+    fetch('/translate', {
+        method: 'POST',
+        body: params
+    }).then(response => response.text())
+    .then((translatedMessage) => {
+        textContainer.innerText = translatedMessage;
+    });
 }

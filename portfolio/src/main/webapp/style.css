@@ -126,3 +126,16 @@ div.subcontent{
 p.credit{
     font-size: xx-small;
 }
+
+p.comment-message{
+    display: inline;
+}
+
+select.language{
+    background-color: var(--pale-blush);
+    margin-right: 1vw;
+    border: 0.2vmin solid var(--pale-blush);
+    font-family: inherit;
+    font-size: smaller;
+    display: inline;
+}
