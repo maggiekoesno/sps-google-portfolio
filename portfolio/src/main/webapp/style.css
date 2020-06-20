@@ -1,5 +1,13 @@
+:root {
+    --burnt-orange: #b58171;
+    --pale-blush: #f3e6df;
+    --nude-peach: #e3bea6;
+    --bg-off-white: #f9f8f5;
+    --duck-egg: #9fabaf;   
+}
+
 #main-container{
-    background-color: #f3e6df;
+    background-color: var(--pale-blush);
     height: 100vh;
     width: 100vw; 
     position: absolute;
@@ -8,13 +16,13 @@
 #bg-shape{
     height: 0;
     width: 50vw;
-    border-bottom: 100vh solid #e3bea6;
+    border-bottom: 100vh solid var(--nude-peach);
     border-right: 20vw solid transparent;
     position: absolute;
 }
 
 #portfolio {
-    background-color: #f9f8f5;
+    background-color: var(--bg-off-white);
     height: 80vh;
     width: 80vw;
     margin-top: 10vh;
@@ -39,7 +47,7 @@
 .nav-item{
     text-align: center;
     border-radius: 50%;
-    border: 2px solid #9fabaf;
+    border: 2px solid var(--duck-egg);
     height: 10vh;
     width: 10vh;
     margin: 4vh 0;
@@ -60,12 +68,12 @@ img {
 }
 
 #fact-button{
-    border: solid #9fabaf;
+    border: solid var(--duck-egg);
     border-width: 0 1vmin 1vmin 0;
     display: inline-block;
     padding: 1vmin;
     transform: rotate(-45deg);
-    background-color: #f9f8f5;
+    background-color: var(--bg-off-white);
 }
 
 #fact-text-div{
@@ -91,8 +99,8 @@ input{
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 2px solid #9fabaf;
-    background-color: #f9f8f5;
+    border-bottom: 2px solid var(--duck-egg);
+    background-color: var(--bg-off-white);
     margin-left: 4px;
 }
 
@@ -101,13 +109,13 @@ input{
 }
 
 .comment-container{
-    border-left: 2px solid #b58171;
+    border-left: 2px solid var(--burnt-orange);
     padding-left: 5px;
     margin-left: 20px;
 }
 
 p.commenter{
-    color: #9fabaf;
+    color: var(--duck-egg);
     font-style: italic;
 }
 
