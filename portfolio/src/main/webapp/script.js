@@ -64,12 +64,7 @@ function getComments() {
 
 /** Creates a <div> element containing comment. */
 function addCommentElements(commentContainer, comments, isReply) {
-    if (comments.length == 0){
-        return commentContainer;
-    }
-
-    var i;
-    for (i = 0; i < comments.length; i++) {
+    for (var i = 0; i < comments.length; i++) {
         commentContainer.appendChild(createCommentElement(comments[i], isReply));
     }
 
