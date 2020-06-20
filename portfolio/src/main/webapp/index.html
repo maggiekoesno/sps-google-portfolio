@@ -7,37 +7,54 @@
     <script src="script.js"></script>
   </head>
   <body onload="runOnLoadFunctions()">
-    <div id="portfolio">
-        <div id="sidebar">
-            <div id="img-container">
-                <img src="images/pic.png">
+    <div id="main-container">
+        <div id="bg-shape"></div>
+        <div id="portfolio">
+            <div id="sidebar">
+                <div class="nav-item" style="border:none;">
+                    <a href=#index><img id="img-index" src="images/pic.png"></a>
+                </div>
+                <div class="nav-item">
+                    <a href=#work><img src="images/suitcase.png"></a>
+                </div>
+                <div class="nav-item">
+                    <a href=#projects><img src="images/web-programming.png"></a>
+                </div>
+                <div class="nav-item">
+                    <a href=#contact><img src="images/contact.png"></a>
+                </div>
+                <div class="nav-item">
+                    <a href=#comments><img src="images/comment.png"></a>
+                </div>
             </div>
-            <ul>
-                <li><a class="active" href="#index">Hello</a></li>
-                <li><a href="#facts">Find Out More</a></li>
-                <li><a href="#comments">Comments</a></li>
-            </ul>
-        </div>
-        <div id="content">
-            <div class="subcontent" id="index">
-                <h1 id="greeting-header"> Hello!</h1>
-                <p>My name is Margaret Claire and welcome to my portfolio.</p>
-                <p>I'm currently a final year student at Nanyang Technological University. I'm majoring in Computer Science with a specialisation in Computer Security and Artificial Intelligence. </p>
-            </div>
-            <div class="subcontent" id="facts">
-                <p>Get to know me a bit better with some random facts:</p>
-                <button onclick="addRandomFact()"> Tell me more </button>
-                <div id="fact-container"></div>
-            </div>
-            <div class="subcontent" id="comments">
-                <p>Leave me a comment!</p>
-                <form name="2" action="/comments" method="POST">
-                    <input type="text" name="commenter" placeholder="Name (Optional)" size = "20" maxlength="20">
-                    <input type="text" name="comment-message" placeholder="Comment" size = "100" maxlength="400" required> 
-                    <input type="hidden" name="parent-comment" value="-1"> 
-                    <input type="submit" style="display: none">
-                </form>
-                <div id="comments-container"></div>
+            <div id="content">
+                <div class="subcontent" id="index">
+                    <h1 id="greeting-header"> Hello!</h1>
+                    <p>My name is Margaret Claire and welcome to my portfolio.</p>
+                    <p>I'm currently a final year student at Nanyang Technological University. I'm majoring in Computer Science with a specialisation in Computer Security and Networking &amp; Mobility. </p>
+                    <p style="margin-bottom:0;">Get to know me a bit better with some random facts. Click the arrow below!</p>
+                    <button id="fact-button" onclick="addRandomFact()"></button>
+                    <div id="fact-text-div"><p id="fact-text"></p></div>
+                </div>
+                <div class ="subcontent" id="work"></div>
+                <div class ="subcontent" id="projects"></div>
+                <div class ="subcontent" id="contact"></div>
+                <div class="subcontent" id="comments">
+                    <p>Leave me a comment!</p>
+                    <form id="main-form" name="2" action="/comments" method="POST">
+                        <input type="text" name="commenter" placeholder="Name (Optional)" size = "20" maxlength="20">
+                        <input type="text" name="comment-message" placeholder="Comment" size = "100" maxlength="400" required> 
+                        <input type="hidden" name="parent-comment" value="-1"> 
+                        <input type="submit" style="display: none">
+                    </form>
+                    <div id="comments-container"></div>
+                </div>
+                <div class="subcontent">
+                    <p class="credit">Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+                    <p class="credit">Icons made by <a href="https://www.flaticon.com/authors/icongeek26" title="Icongeek26">Icongeek26</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+                    <p class="credit">Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
+                    <p class="credit">Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></p>
+                </div>
             </div>
         </div>
     </div>

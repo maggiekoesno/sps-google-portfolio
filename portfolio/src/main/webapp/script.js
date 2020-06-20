@@ -20,16 +20,16 @@ function addRandomFact() {
       ['I dyed my hair on a bet. It used to be purple but faded to a blonde.', 
       'I love to travel and spent a semester in the UK during my second year. ', 
       'I absolutely love animals and almost became a veterinarian. Glad I chose computer science instead.', 
-      'My favorite programming language is python even though I have a love-hate relationship with duck-typing', 
-      'This is an outdated picture (my hair is fully black now) but I hate taking pictures so this is the only one I have'
+      'My favorite programming language is python even though I have a love-hate relationship with duck-typing.', 
+      'This is an outdated picture (my hair is fully black now) but I hate taking pictures so this is the only one I have.'
       ];
 
   // Pick a fact.
   const funFact = funFacts[Math.floor(Math.random() * funFacts.length)];
 
   // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = funFact;
+  const factParagraph = document.getElementById('fact-text');
+  factParagraph.innerText = funFact;
 }
 
 /**
@@ -64,12 +64,7 @@ function getComments() {
 
 /** Creates a <div> element containing comment. */
 function addCommentElements(commentContainer, comments, isReply) {
-    if (comments.length == 0){
-        return commentContainer;
-    }
-
-    var i;
-    for (i = 0; i < comments.length; i++) {
+    for (var i = 0; i < comments.length; i++) {
         commentContainer.appendChild(createCommentElement(comments[i], isReply));
     }
 
