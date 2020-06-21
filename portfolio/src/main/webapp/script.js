@@ -72,7 +72,7 @@ function addCommentElements(commentContainer, comments, isReply) {
 }
 
 function createCommentElement(comment, isReply){
-    var commentDiv; var commenter;
+    var commentDiv, commenter;
 
     commentDiv = document.createElement("div");
     commentDiv.className = "comment-container";
@@ -97,7 +97,7 @@ function createCommentElement(comment, isReply){
 }
 
 function createReplyFormElement(parentId){
-    var replyForm; var formInput; 
+    var replyForm, formInput; 
 
     replyForm = document.createElement("form");
     replyForm.action = "/comments";
@@ -122,7 +122,7 @@ function createReplyFormElement(parentId){
 }
 
 function createParagraphElement(className, text, id=-1){
-    var paragraph; var node; var paragraphId;
+    var paragraph, node, paragraphId;
 
     paragraph = document.createElement("p");
     paragraph.className = className;
@@ -136,7 +136,7 @@ function createParagraphElement(className, text, id=-1){
 }
 
 function createSelectElement(id){
-    var selectElement; var selectId; var optionElement; var languages; var languageCode; var textId;
+    var selectElement, selectId, optionElement, languages, languageCode, textId;
 
     selectElement = document.createElement("select");
     selectElement.className = "language";
