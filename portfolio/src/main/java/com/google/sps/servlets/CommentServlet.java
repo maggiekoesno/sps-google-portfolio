@@ -26,6 +26,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.io.IOException;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +110,8 @@ public final class CommentServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(entity);
 
+        sendMail(commentMessage, commenter);
+
         response.sendRedirect("/index.html");
     }
 
@@ -120,5 +131,24 @@ public final class CommentServlet extends HttpServlet {
             }
         }
         return null;
+    }
+
+    private void sendMail(String commentMessage, String commenter) {
+        Properties props = new Properties();
+        Session session = Session.getDefaultInstance(props, null);
+
+        try {
+        Message msg = new MimeMessage(session);
+        msg.setFrom(new InternetAddress("mkoesno@sps-program.com"));
+        msg.addRecipient(Message.RecipientType.TO,
+                        new InternetAddress("mkoesno@sps-program.com"));
+        msg.setSubject("New comment from ".concat(commenter));
+        msg.setText(commentMessage);
+        Transport.send(msg);
+        } catch (AddressException e) {
+        // ...
+        } catch (MessagingException e) {
+        // ...
+        }
     }
 }
