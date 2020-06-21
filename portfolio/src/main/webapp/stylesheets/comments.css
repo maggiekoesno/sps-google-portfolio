@@ -1,0 +1,37 @@
+p.comment-message{
+    display: inline;
+}
+
+select.language{
+    background-color: var(--pale-blush);
+    margin-right: 1vw;
+    border: 0.2vmin solid var(--pale-blush);
+    font-family: inherit;
+    font-size: smaller;
+    display: inline;
+}
+
+.comment-container{
+    border-left: 2px solid var(--burnt-orange);
+    padding-left: 5px;
+    margin-left: 20px;
+}
+
+p.commenter{
+    color: var(--duck-egg);
+    font-style: italic;
+}
+
+#main-form{
+    padding-left: 1vw;
+}
+
+input{
+    height: 3vh;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid var(--duck-egg);
+    background-color: var(--bg-off-white);
+    margin-left: 4px;
+}

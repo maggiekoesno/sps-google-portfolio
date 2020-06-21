@@ -1,0 +1,26 @@
+#sidebar{
+    float: left;
+    margin: 0;
+    height: 74vh;
+    padding: 3vh 3vw;
+}
+
+#img-index{ 
+    border-radius: 50%;
+    height: 100%;
+    padding: 0;
+}
+
+.nav-item{
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid var(--duck-egg);
+    height: 10vh;
+    width: 10vh;
+    margin: 4vh 0;
+}
+
+img {
+    height: 6vh;
+    padding: 2vh 0;
+}
